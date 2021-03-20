@@ -1,0 +1,21 @@
+---
+- name: Update repository PHP
+  apt_repository: repo='ppa:ondrej/php' state=present update_cache=yes
+  sudo: true
+
+- name: install PHP
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - php7.2
+    - php7.2-mysql
+    - php7.2-gd
+    - php7.2-mcrypt
+    - php7.2-fpm
+
+- name: Config service PHP
+  template: src=default dest=/etc/nginx/sites-enabled/default
+  notify: restart nginx
+- name: Copy info.php
+  template: src=info.php dest=/var/www/html/info.php

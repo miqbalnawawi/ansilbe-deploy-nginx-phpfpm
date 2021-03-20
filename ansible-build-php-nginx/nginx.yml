@@ -1,0 +1,8 @@
+---
+- name: Install nginx dengan ansible
+  hosts: webserver
+  user: root
+  #sudo: yes
+  roles:
+    - nginx
+    - php
